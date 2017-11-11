@@ -148,15 +148,17 @@ public class ModelPeliculas {
         }
     }
 
-    public void moverSiguiente() {
+    public boolean moverSiguiente() {
         try {
             if (rs.isLast() == false) {
                 rs.next();
                 llenarValores();
+                return true;
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error 105");
         }
+        return false;
     }
 
     public void moverAnterior() {
@@ -182,9 +184,19 @@ public class ModelPeliculas {
         }
     }
 
+    public void mostrarTodos() {
+        try {
+            sql = "select * from peliculas;";
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error 107 " + ex + "");
+        }
+    }
+
     public void insertar() {
         try {
-            setDuracion(String.valueOf(hora)+":"+String.valueOf(minuto)+":"+String.valueOf(segundo));
+            setDuracion(String.valueOf(hora) + ":" + String.valueOf(minuto) + ":" + String.valueOf(segundo));
             sql = "INSERT INTO peliculas (pelicula,formato, duracion, descripcion) VALUES (?,?,?,?);";
             ps = conexion.prepareStatement(sql);
             ps.setString(1, pelicula);
@@ -212,7 +224,7 @@ public class ModelPeliculas {
 
     public void actualizar() {
         try {
-            setDuracion(String.valueOf(hora)+":"+String.valueOf(minuto)+":"+String.valueOf(segundo));
+            setDuracion(String.valueOf(hora) + ":" + String.valueOf(minuto) + ":" + String.valueOf(segundo));
             sql = "UPDATE peliculas SET pelicula=?, formato=?, duracion=?, descripcion=? WHERE id_pelicula=?;";
             ps = conexion.prepareStatement(sql);
             ps.setString(1, pelicula);

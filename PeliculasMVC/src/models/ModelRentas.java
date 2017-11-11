@@ -207,4 +207,14 @@ public class ModelRentas {
             JOptionPane.showMessageDialog(null, "Error 110 " + ex + "");
         }
     }
+    
+    public void operacionesAutomaticas(){
+        if(formato.equals("DVD")){
+            setCosto_dia(10);
+        }else{
+            setCosto_dia(15);
+        }
+        this.setTotal_renta(getCosto_dia()*getDias());
+    }
+   
 }

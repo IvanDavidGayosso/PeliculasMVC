@@ -5,7 +5,6 @@
  */
 package models;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -105,15 +104,17 @@ public class ModelClientes {
         }
     }
 
-    public void moverSiguiente() {
+    public boolean moverSiguiente() {
         try {
             if (rs.isLast() == false) {
                 rs.next();
                 llenarValores();
+                return true;
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error 105");
         }
+        return false;
     }
 
     public void moverAnterior() {
@@ -134,6 +135,17 @@ public class ModelClientes {
             ps = conexion.prepareStatement(sql);
             rs = ps.executeQuery();
             moverPrimero();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error 107 " + ex + "");
+        }
+    }
+
+    public void mostrarTodos() {
+
+        try {
+            sql = "select * from clientes;";
+            ps = conexion.prepareStatement(sql);
+            rs = ps.executeQuery();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error 107 " + ex + "");
         }
